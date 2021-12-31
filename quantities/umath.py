@@ -365,3 +365,19 @@ def arctanh(x, out=None):
         dimensionless,
         copy=False
     )
+
+@with_doc(np.dot)
+def dot(a, b, out=None):
+    if not (isinstance(a, Quantity) and isinstance(b, Quantity)):
+        return np.dot(a, b, out)
+
+    if not isinstance(a, Quantity):
+        a = Quantity(a, dimensionless, copy=False)
+    if not isinstance(b, Quantity):
+        b = Quantity(b, dimensionless, copy=False)
+
+    return Quantity(
+        np.dot(a, b, out),
+        a._dimensionality*b._dimensionality,
+        copy=False
+    )
