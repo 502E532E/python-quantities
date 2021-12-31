@@ -1,6 +1,7 @@
 import numpy as np
 
 from .. import units as pq
+from .. import umath as pq_umath
 from .common import TestCase, unittest
 
 
@@ -47,11 +48,10 @@ class TestUmath(TestCase):
         except ValueError as e:
             raise self.failureException(e)
 
-    @unittest.expectedFailure
     def test_cross(self):
         a = [3,-3, 1] * pq.kPa
         b = [4, 9, 2] * pq.m**2
-        self.assertQuantityEqual(np.cross(a,b), [-15,-2,39]*pq.kPa*pq.m**2)
+        self.assertQuantityEqual(pq_umath.cross(a,b), [-15,-2,39]*pq.kPa*pq.m**2)
 
     def test_trapz(self):
         self.assertQuantityEqual(np.trapz(self.q, dx = 1*pq.m), 7.5 * pq.J*pq.m)
